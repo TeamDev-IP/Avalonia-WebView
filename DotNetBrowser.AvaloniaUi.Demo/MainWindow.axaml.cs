@@ -39,9 +39,6 @@ namespace DotNetBrowser.AvaloniaUi.Demo
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            SetupFocusObserver();
-#endif
             Model = new BrowserTabsModel();
             Model.AllTabsClosed += (_, _) => Close();
             Model.EngineCrashed += (_, e) => ShowError(e.Message, e.Title);
@@ -68,25 +65,6 @@ namespace DotNetBrowser.AvaloniaUi.Demo
             Model.CreateTab();
         }
         // ReSharper restore UnusedParameter.Local
-
-        private void SetupFocusObserver()
-        {
-            INotifyPropertyChanged keyboard = typeof(KeyboardDevice)
-                                             .GetProperty("Instance", BindingFlags.NonPublic | BindingFlags.Static)?
-                                             .GetValue(null) as INotifyPropertyChanged;
-            if (keyboard == null)
-            {
-                return;
-            }
-
-            keyboard.PropertyChanged += (_, args) =>
-            {
-                if (args.PropertyName == "FocusedElement")
-                {
-                    Debug.WriteLine($"-- Focused element changed to {FocusManager?.GetFocusedElement()}");
-                }
-            };
-        }
 
         private void ShowError(string message, string title)
         {
