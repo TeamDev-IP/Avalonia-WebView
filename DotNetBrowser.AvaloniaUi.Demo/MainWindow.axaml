@@ -1,0 +1,82 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tabModels="clr-namespace:DotNetBrowser.AvaloniaUi.Demo.TabModels"
+        xmlns:dataTemplates="clr-namespace:DotNetBrowser.AvaloniaUi.Demo.DataTemplates"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DotNetBrowser.AvaloniaUi.Demo.MainWindow"
+        ExtendClientAreaToDecorationsHint="False"
+        Title="DotNetBrowser Avalonia UI Demo" Opened="MainWindow_Opened" Icon="Icon.ico">
+    <TabControl ItemsSource="{Binding Tabs}" HorizontalContentAlignment="Left" x:Name="MainTabControl">
+        <Design.DataContext>
+            <tabModels:BrowserTabsModel />
+        </Design.DataContext>
+
+        <TabControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type tabModels:BrowserTabModel}">
+                <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" ToolTip.Tip="{Binding Header}">
+                    <Image Source="{Binding Favicon}" DockPanel.Dock="Left" Width="16" Height="16"
+                           VerticalAlignment="Center" Margin="5" />
+                    <Button DockPanel.Dock="Right" Command="{Binding OnClose}" Classes="Flat"
+                            Width="16" Height="16" Padding="0" Margin="10 0 5 0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            HorizontalAlignment="Center">
+                        <avalonia:MaterialIcon Kind="Close" />
+                    </Button>
+                    <TextBlock Text="{Binding Header}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                               MinWidth="50" Margin="2" />
+                </DockPanel>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+            <dataTemplates:BrowserTabDataTemplate />
+        </TabControl.ContentTemplate>
+
+        <TabControl.Styles>
+            <Style Selector="TabControl">
+                <Setter Property="Template">
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid ClipToBounds="true"
+                              KeyboardNavigation.TabNavigation="Local"
+                              Background="{DynamicResource MaterialDesignToolBarBackground}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" MaxHeight="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Column="0"
+                                       Grid.Row="0"
+                                       x:Name="HeaderPanel" LastChildFill="True">
+                                <Button Command="{Binding OnNewTab}"
+                                        Classes="Flat" Margin="5,0"
+                                        DockPanel.Dock="Right">
+                                    <avalonia:MaterialIcon Kind="Plus" />
+                                </Button>
+                                <ItemsPresenter
+                                    Name="PART_ItemsPresenter"
+                                    ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            </DockPanel>
+                            <ContentPresenter
+                                Name="PART_SelectedContentHost"
+                                Grid.Row="1"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                Content="{TemplateBinding SelectedContent}"
+                                ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter>
+            </Style>
+            <Style Selector="TabItem">
+                <Setter Property="MaxWidth" Value="200" />
+                <Setter Property="MaxHeight" Value="40" />
+            </Style>
+            <Style Selector="TabItem:selected">
+                <Setter Property="Background" Value="{DynamicResource MaterialPaperBrush }" />
+            </Style>
+        </TabControl.Styles>
+    </TabControl>
+</Window>

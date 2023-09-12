@@ -1,0 +1,39 @@
+{
+    "name": "DotNetBrowser Development(.NET 6)",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "hostRequirements": {
+        "cpus": 4,
+        "memory": "4gb",
+        "storage": "32gb" 
+    },
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // Here, desktop-lite is configured, and its VNC ports are forwarded.
+    "features": {
+        "desktop-lite": {
+            "password": "dotnetbrowser",
+            "webPort": "6082",
+            "vncPort": "5902"
+        }
+    },
+    "forwardPorts": [6082, 5902],
+    "portsAttributes": {
+        "5902": {
+            "label": "VNC"
+        },
+        "6082": {
+            "label": "WEB VNC"
+        }
+    },
+
+    // Set DOTNETBROWSER_LICENSE for the whole container according to its value in the local environment.
+    // This can be used to pass the license key to DotNetBrowser.
+    // This also works if the license is stored in GitHub secrets.
+    "containerEnv": {
+        "DOTNETBROWSER_LICENSE": "${localEnv:DOTNETBROWSER_LICENSE}"
+    },
+    
+    // Start Xvfb whenever the container is started.
+    "postStartCommand": "sudo /etc/init.d/xvfb start && dotnet tool restore"
+}

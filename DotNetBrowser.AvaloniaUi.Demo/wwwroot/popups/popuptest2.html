@@ -1,0 +1,29 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
+	<script type="text/javascript" language="JavaScript">
+    function enter() {
+      window.open('popup1.html', '', 'toolbar=no,menubar=no,location=yes,height=320,width=300,left=1');
+    }
+
+    window.open('popup2.html', '', 'toolbar=yes,menubar=yes,location=no,height=450,width=180,left=430');
+
+    function leave() {
+      window.open('popup3.html', '', '');
+    }
+  </script>
+	<title>Popup Test 2</title>
+</head>
+<body class="default" onload="enter()" onunload="leave()">
+<div class="main">
+	<b>This page will open 3 popup windows and an additional one when you leave the page</b>
+	<form>
+		<input type="button" value="  BACK  " onclick="history.go(-1)">
+	</form>
+</div>
+<script type="text/javascript">
+    window.open('popup4.html', '', 'toolbar=yes,menubar=yes,location=no,status=yes,height=150,width=400,top=400,left=10');
+  </script>
+</body>
+</html>

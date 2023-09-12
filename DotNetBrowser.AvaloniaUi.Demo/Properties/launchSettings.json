@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "DotNetBrowser.AvaloniaUi.Demo": {
+      "commandName": "Project"
+    }
+  }
+}

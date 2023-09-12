@@ -1,0 +1,93 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avaloniaUi="clr-namespace:DotNetBrowser.AvaloniaUi;assembly=DotNetBrowser.AvaloniaUi"
+             xmlns:tabModels="clr-namespace:DotNetBrowser.AvaloniaUi.Demo.TabModels"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DotNetBrowser.AvaloniaUi.Demo.Views.BrowserTabView">
+    <Design.DataContext>
+        <tabModels:BrowserTabModel />
+    </Design.DataContext>
+    <UserControl.Resources>
+        <ContextMenu x:Key="MainMenu">
+            <MenuItem Header="Hide Scrollbars" Command="{Binding HideScrollbars}">
+                <MenuItem.Icon>
+                    <CheckBox BorderThickness="0"
+                              IsHitTestVisible="False"
+                              IsChecked="{Binding ScrollbarsHidden}">
+                        Toggle _Me
+                    </CheckBox>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Transparency" Click="ShowTransparentWindow" />
+            <Separator />
+            <MenuItem Header="Popup Windows" Command="{Binding LoadUrl}"
+                      CommandParameter="http://internal.host/popups/index.html" />
+            <MenuItem Header="Select &amp; Option" Command="{Binding LoadUrl}"
+                      CommandParameter="http://internal.host/select-option.html" />
+            <MenuItem Header="Upload File" Command="{Binding LoadUrl}"
+                      CommandParameter="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_html_file_upload_button" />
+            <MenuItem Header="Download File" Command="{Binding LoadUrl}"
+                      CommandParameter="https://storage.googleapis.com/cloud.teamdev.com/downloads/dotnetbrowser/2.20/dotnetbrowser-net45-2.20.zip" />
+            <MenuItem Header="JavaScript Dialogs" Command="{Binding LoadUrl}"
+                      CommandParameter="http://www.javascripter.net/faq/alert.htm" />
+            <MenuItem Header="PDF Viewer" Command="{Binding LoadUrl}"
+                      CommandParameter="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" />
+            <MenuItem Header="Google Maps" Command="{Binding LoadUrl}" CommandParameter="https://maps.google.com" />
+            <MenuItem Header="HTML5 Video" Command="{Binding LoadUrl}"
+                      CommandParameter="http://www.w3.org/2010/05/video/mediaevents.html" />
+            <MenuItem Header="Video with DRM and Picture-in-picture" Command="{Binding LoadUrl}"
+                      CommandParameter="https://googlechrome.github.io/samples/picture-in-picture/" />
+            <MenuItem Header="CSS Cursors" Command="{Binding LoadUrl}"
+                      CommandParameter="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor" />
+            <Separator />
+            <MenuItem Header="Print" Command="{Binding Print}" />
+            <MenuItem Header="Take Screenshot" Click="TakeScreenshot" />
+            <MenuItem Header="Developer Tools" Command="{Binding OpenDevTools}" />
+        </ContextMenu>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <Grid Background="{DynamicResource MaterialPaperBrush}" DockPanel.Dock="Top" MaxHeight="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Back" Classes="Flat" IsEnabled="{Binding CanGoBack}"
+                    Margin="5" Command="{Binding Browser.Navigation.GoBack}"
+                    Width="36">
+                <avalonia:MaterialIcon Kind="ArrowLeft" />
+            </Button>
+            <Button x:Name="Forward" Classes="Flat" IsEnabled="{Binding CanGoForward}"
+                    Margin="5" Command="{Binding Browser.Navigation.GoForward}"
+                    Grid.Column="1" Width="36">
+                <avalonia:MaterialIcon Kind="ArrowRight" />
+            </Button>
+
+            <Button x:Name="Reload" Classes="Flat"
+                    Margin="5" Command="{Binding Browser.Navigation.Reload}"
+                    Grid.Column="2" Width="36">
+                <avalonia:MaterialIcon Kind="Reload" />
+            </Button>
+
+            <TextBox x:Name="AddressBar" Margin="5" MinWidth="100" Grid.Column="3" KeyDown="AddressBarKeyDown" />
+            <Button x:Name="Menu" Classes="Flat" Margin="5" Grid.Column="4" Click="OnMenuButtonClick"
+                    ContextMenu="{DynamicResource MainMenu}">
+                <avalonia:MaterialIcon Kind="Menu" />
+            </Button>
+
+        </Grid>
+        <DockPanel LastChildFill="True" MinHeight="30" DockPanel.Dock="Bottom"
+                   Background="{DynamicResource MaterialPaperBrush}">
+            <Label DockPanel.Dock="Right"
+                   Content="{Binding RenderingMode}" Margin="5,2" />
+            <Label Content="{Binding Status, Mode=OneWay}" Margin="5,2" />
+        </DockPanel>
+        <avaloniaUi:BrowserView Name="View" />
+    </DockPanel>
+
+</UserControl>

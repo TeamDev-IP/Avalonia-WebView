@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
+    <TrimMode>copyused</TrimMode>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+    <ReferencePath>netstandard20</ReferencePath>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--This helps with theme dll-s trimming.
+	If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.
+	https://github.com/AvaloniaUI/Avalonia/issues/5593 -->
+    <TrimmableAssembly Include="Avalonia.Themes.Fluent" />
+    <TrimmableAssembly Include="Avalonia.Themes.Default" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.4" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.4" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.4" />
+    <PackageReference Include="Material.Avalonia" Version="3.0.0.35-nightly" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.1.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNetBrowser.AvaloniaUi" Version="2.23.3-b3831-eap" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Icon.ico" />
+    <AvaloniaResource Include="wwwroot/**/*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\BrowserTabView.axaml.cs">
+      <DependentUpon>BrowserTabView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
