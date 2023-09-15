@@ -8,7 +8,7 @@
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
-        <themes:MaterialTheme BaseTheme="Inherit" PrimaryColor="Purple" SecondaryColor="DeepPurple" />
+        <themes:MaterialTheme BaseTheme="Inherit" PrimaryColor="BlueGrey" SecondaryColor="Blue" />
         <avalonia:MaterialIconStyles />
     </Application.Styles>
 </Application>

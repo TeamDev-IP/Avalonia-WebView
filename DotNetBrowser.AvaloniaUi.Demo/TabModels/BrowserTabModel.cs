@@ -101,28 +101,11 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
             Header = header;
         }
 
-        public void HideScrollbars()
-        {
-            bool hidden = !ScrollbarsHidden;
-            Browser.Settings.ScrollbarsHidden = hidden;
-            ScrollbarsHidden = hidden;
-        }
-
         public void LoadUrl(string newUrl)
         {
             Browser?.Navigation.LoadUrl(newUrl)
                     .ContinueWith(_ => { UpdateStates(); },
                                   TaskScheduler.FromCurrentSynchronizationContext());
-        }
-
-        /// <summary>
-        ///     LoadUrl() overload for the proper tab menu binding.
-        /// </summary>
-        /// <param name="newUrl"> The URL to load.</param>
-        // ReSharper disable once UnusedMember.Global
-        public void LoadUrl(object newUrl)
-        {
-            LoadUrl(newUrl.ToString());
         }
 
         public void OnClose()
@@ -139,6 +122,10 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
         public void Print()
         {
             Browser?.MainFrame.Print();
+        }
+
+        public void PrintToPdf(string file)
+        {
         }
 
         public void TakeScreenshot(string fileName)

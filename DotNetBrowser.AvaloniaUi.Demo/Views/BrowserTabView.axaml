@@ -12,38 +12,10 @@
     </Design.DataContext>
     <UserControl.Resources>
         <ContextMenu x:Key="MainMenu">
-            <MenuItem Header="Hide Scrollbars" Command="{Binding HideScrollbars}">
-                <MenuItem.Icon>
-                    <CheckBox BorderThickness="0"
-                              IsHitTestVisible="False"
-                              IsChecked="{Binding ScrollbarsHidden}">
-                        Toggle _Me
-                    </CheckBox>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="Transparency" Click="ShowTransparentWindow" />
-            <Separator />
-            <MenuItem Header="Popup Windows" Command="{Binding LoadUrl}"
-                      CommandParameter="http://internal.host/popups/index.html" />
-            <MenuItem Header="Select &amp; Option" Command="{Binding LoadUrl}"
-                      CommandParameter="http://internal.host/select-option.html" />
-            <MenuItem Header="Upload File" Command="{Binding LoadUrl}"
-                      CommandParameter="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_html_file_upload_button" />
-            <MenuItem Header="Download File" Command="{Binding LoadUrl}"
-                      CommandParameter="https://storage.googleapis.com/cloud.teamdev.com/downloads/dotnetbrowser/2.20/dotnetbrowser-net45-2.20.zip" />
-            <MenuItem Header="JavaScript Dialogs" Command="{Binding LoadUrl}"
-                      CommandParameter="http://www.javascripter.net/faq/alert.htm" />
-            <MenuItem Header="PDF Viewer" Command="{Binding LoadUrl}"
-                      CommandParameter="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" />
-            <MenuItem Header="Google Maps" Command="{Binding LoadUrl}" CommandParameter="https://maps.google.com" />
-            <MenuItem Header="HTML5 Video" Command="{Binding LoadUrl}"
-                      CommandParameter="http://www.w3.org/2010/05/video/mediaevents.html" />
-            <MenuItem Header="Video with DRM and Picture-in-picture" Command="{Binding LoadUrl}"
-                      CommandParameter="https://googlechrome.github.io/samples/picture-in-picture/" />
-            <MenuItem Header="CSS Cursors" Command="{Binding LoadUrl}"
-                      CommandParameter="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor" />
+            <MenuItem Header="Full Screen" Click="FullScreen" />
             <Separator />
             <MenuItem Header="Print" Command="{Binding Print}" />
+            <MenuItem Header="Print to PDF" Click="PrintToPdf" />
             <MenuItem Header="Take Screenshot" Click="TakeScreenshot" />
             <MenuItem Header="Developer Tools" Command="{Binding OpenDevTools}" />
         </ContextMenu>

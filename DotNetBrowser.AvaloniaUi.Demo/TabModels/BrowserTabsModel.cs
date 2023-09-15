@@ -30,14 +30,15 @@ using DotNetBrowser.AvaloniaUi.Dialogs;
 using DotNetBrowser.Engine;
 using DotNetBrowser.Handlers;
 using DotNetBrowser.Logging;
-using DotNetBrowser.Net;
 using DotNetBrowser.Permissions.Handlers;
 
 namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
 {
     public class BrowserTabsModel
     {
-        private const string DefaultUrl = "https://www.teamdev.com/dotnetbrowser";
+        private const string DefaultUrl =
+            "https://teamdev.com/dotnetbrowser/blog/chrome-extensions-in-dotnetbrowser/";
+
         private IEngine engine;
         private RenderingMode renderingMode;
 
@@ -82,10 +83,6 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
                 {
                     RenderingMode = renderingMode,
                     ProprietaryFeatures = proprietaryFeatures,
-                    Schemes =
-                    {
-                        { Scheme.Http, new AvaloniaInterceptRequestHandler() }
-                    },
                     ChromiumSwitches = { "--force-renderer-accessibility" }
                 }.Build());
 

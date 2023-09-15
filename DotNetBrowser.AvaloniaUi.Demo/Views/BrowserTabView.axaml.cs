@@ -21,23 +21,15 @@
 #endregion
 
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
-using Avalonia.VisualTree;
 using DotNetBrowser.AvaloniaUi.Demo.TabModels;
 using DotNetBrowser.Browser;
-using DotNetBrowser.Browser.Handlers;
-using DotNetBrowser.Engine;
-using DotNetBrowser.Handlers;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Base;
-using MsBox.Avalonia.Dto;
-using MsBox.Avalonia.Models;
+
 // ReSharper disable UnusedParameter.Local
 
 namespace DotNetBrowser.AvaloniaUi.Demo.Views
@@ -61,6 +53,10 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
             }
         }
 
+        private void FullScreen(object sender, RoutedEventArgs e)
+        {
+        }
+
         private void OnDataContextChanged(object sender, EventArgs e)
         {
             if (Model != null)
@@ -81,89 +77,42 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
             Dispatcher.UIThread.InvokeAsync(() => AddressBar.Text = Model?.Browser.Url);
         }
 
-        private void ShowTransparentWindow(object sender, RoutedEventArgs e)
+        private void PrintToPdf(object sender, RoutedEventArgs e)
         {
-            Window visualRoot = this.GetVisualRoot() as Window;
-            IEngine engine = Model?.Browser.Engine;
-            if (engine?.Options.RenderingMode != RenderingMode.OffScreen)
-            {
-                MessageBoxCustomParams parameters = new()
-                {
-                    ContentTitle = "Rendering mode does not support transparency",
-                    ContentHeader =
-                        "The current rendering mode does not support transparency.",
-                    ContentMessage =
-                        "To switch to the off-screen rendering mode, please specify 'lightweight' command-line switch when starting the demo.",
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                    ButtonDefinitions = new[]
-                        { new ButtonDefinition { Name = "OK", IsDefault = true } },
-                };
-                IMsBox<string> messageBoxStandardWindow = MessageBoxManager
-                   .GetMessageBoxCustom(parameters);
+            IStorageProvider provider = TopLevel.GetTopLevel(this)?.StorageProvider;
 
-                messageBoxStandardWindow.ShowWindowDialogAsync(visualRoot);
-            }
-            else
-            {
-                IBrowser browser = engine.CreateBrowser();
-                if (browser == null)
-                {
-                    return;
-                }
-
-                TransparentWindow transparentWindow = new();
-                transparentWindow.Closed += delegate { browser.Dispose(); };
-
-                browser.InjectJsHandler = new Handler<InjectJsParameters>(p =>
-                {
-                    dynamic window = p.Frame.ExecuteJavaScript("window").Result;
-                    window.CloseHost = (Action)(() =>
-                                                   {
-                                                       Dispatcher.UIThread
-                                                          .InvokeAsync(() => transparentWindow
-                                                              .Close());
-                                                   });
-                });
-                browser.Navigation.LoadUrl("http://internal.host/transparent.html")
-                       .ContinueWith(_ =>
-                        {
-                            browser.Settings.TransparentBackgroundEnabled = true;
-                        });
-
-                transparentWindow.View.InitializeFrom(browser);
-                if (visualRoot != null)
-                {
-                    transparentWindow.Show(visualRoot);
-                }
-                else
-                {
-                    transparentWindow.Show();
-                }
-            }
+            provider?.SaveFilePickerAsync(new FilePickerSaveOptions
+                      {
+                          DefaultExtension = "pdf",
+                          FileTypeChoices = new[] { FilePickerFileTypes.Pdf },
+                      })
+                     .ContinueWith(t =>
+                      {
+                          string file = t.Result?.Path.LocalPath;
+                          if (!string.IsNullOrWhiteSpace(file))
+                          {
+                              Model?.PrintToPdf(file);
+                          }
+                      }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void TakeScreenshot(object sender, RoutedEventArgs e)
         {
             IStorageProvider provider = TopLevel.GetTopLevel(this)?.StorageProvider;
-            if (provider == null)
-            {
-                Trace.WriteLine("The StorageProvider is null. Unable to use the file picker API");
-                return;
-            }
 
-            provider.SaveFilePickerAsync(new FilePickerSaveOptions
-                     {
-                         DefaultExtension = "png",
-                         FileTypeChoices = new[] { FilePickerFileTypes.ImagePng },
-                     })
-                    .ContinueWith(t =>
-                     {
-                         string file = t.Result?.Path.LocalPath;
-                         if (!string.IsNullOrWhiteSpace(file))
-                         {
-                             Model?.TakeScreenshot(file);
-                         }
-                     }, TaskScheduler.FromCurrentSynchronizationContext());
+            provider?.SaveFilePickerAsync(new FilePickerSaveOptions
+                      {
+                          DefaultExtension = "png",
+                          FileTypeChoices = new[] { FilePickerFileTypes.ImagePng },
+                      })
+                     .ContinueWith(t =>
+                      {
+                          string file = t.Result?.Path.LocalPath;
+                          if (!string.IsNullOrWhiteSpace(file))
+                          {
+                              Model?.TakeScreenshot(file);
+                          }
+                      }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }
