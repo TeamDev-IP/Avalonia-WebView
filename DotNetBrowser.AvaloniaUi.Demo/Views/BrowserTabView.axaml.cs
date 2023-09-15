@@ -27,8 +27,13 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using DotNetBrowser.AvaloniaUi.Demo.TabModels;
 using DotNetBrowser.Browser;
+using DotNetBrowser.Handlers;
+using DotNetBrowser.Input;
+using DotNetBrowser.Input.Keyboard.Events;
+using KeyEventArgs = Avalonia.Input.KeyEventArgs;
 
 // ReSharper disable UnusedParameter.Local
 
@@ -55,6 +60,30 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
 
         private void FullScreen(object sender, RoutedEventArgs e)
         {
+            Window visualRoot = this.GetVisualRoot() as Window;
+            FullScreenWindow fullScreenWindow = new();
+
+            fullScreenWindow.Closed += (s, e) =>
+            {
+                Model.Browser.Keyboard.KeyPressed.Handler = null;
+                View.InitializeFrom(Model.Browser);
+                View.IsVisible = true;
+            };
+
+            Model.Browser.Keyboard.KeyPressed.Handler =
+                new Handler<IKeyPressedEventArgs, InputEventResponse>(p =>
+                {
+                    if (p.VirtualKey == KeyCode.F11)
+                    {
+                        Dispatcher.UIThread.InvokeAsync(() => fullScreenWindow.Close());
+                    }
+
+                    return InputEventResponse.Proceed;
+                });
+            View.IsVisible = false;
+            fullScreenWindow.View.InitializeFrom(Model.Browser);
+
+            fullScreenWindow.Show(visualRoot);
         }
 
         private void OnDataContextChanged(object sender, EventArgs e)
@@ -93,7 +122,15 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
                           {
                               Model?.PrintToPdf(file);
                           }
-                      }, TaskScheduler.FromCurrentSynchronizationContext());
+
+                          return file;
+                      })
+                     .ContinueWith(t1 =>
+                                   {
+                                       string pdf = t1.Result;
+                                       Model?.LoadUrl(pdf);
+                                   }, default, TaskContinuationOptions.OnlyOnRanToCompletion,
+                                   TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void TakeScreenshot(object sender, RoutedEventArgs e)
