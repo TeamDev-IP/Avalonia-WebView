@@ -28,7 +28,10 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Media;
 using DotNetBrowser.Browser;
+using DotNetBrowser.Browser.Handlers;
 using DotNetBrowser.Engine;
+using DotNetBrowser.Handlers;
+using DotNetBrowser.Print.Handlers;
 using SkiaSharp;
 
 namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
@@ -124,8 +127,38 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
             Browser?.MainFrame.Print();
         }
 
-        public void PrintToPdf(string file)
+        public Task<string> PrintToPdf(string file)
         {
+            IHandler<RequestPrintParameters, RequestPrintResponse> handler =
+                Browser.RequestPrintHandler;
+            Browser.RequestPrintHandler =
+                new Handler<RequestPrintParameters, RequestPrintResponse>(
+                     p => RequestPrintResponse.Print()
+                    );
+            TaskCompletionSource<string> whenCompleted = new();
+            // Configure how the browser prints an HTML page.
+            browser.PrintHtmlContentHandler =
+                new Handler<PrintHtmlContentParameters, PrintHtmlContentResponse>(
+                 p =>
+                 {
+                     // Use the PDF printer.
+                     var printer = p.Printers.Pdf;
+                     var job = printer.PrintJob;
+
+                     // Set PDF file path.
+                     job.Settings.PdfFilePath = file;
+
+                     job.PrintCompleted += (_, _) =>
+                     {
+                         whenCompleted.SetResult(file);
+                     };
+
+                     Browser.RequestPrintHandler = handler;
+                     // Proceed with printing using the PDF printer.
+                     return PrintHtmlContentResponse.Print(printer);
+                 });
+            Print();
+            return whenCompleted.Task;
         }
 
         public void TakeScreenshot(string fileName)

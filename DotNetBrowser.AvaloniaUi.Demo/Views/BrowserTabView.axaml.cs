@@ -115,22 +115,25 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
                           DefaultExtension = "pdf",
                           FileTypeChoices = new[] { FilePickerFileTypes.Pdf },
                       })
-                     .ContinueWith(t =>
+                     .ContinueWith(async t =>
                       {
                           string file = t.Result?.Path.LocalPath;
-                          if (!string.IsNullOrWhiteSpace(file))
+                          if (!string.IsNullOrWhiteSpace(file) && Model != null)
                           {
-                              Model?.PrintToPdf(file);
+                              return await Model.PrintToPdf(file);
                           }
 
-                          return file;
-                      })
-                     .ContinueWith(t1 =>
-                                   {
-                                       string pdf = t1.Result;
-                                       Model?.LoadUrl(pdf);
-                                   }, default, TaskContinuationOptions.OnlyOnRanToCompletion,
-                                   TaskScheduler.FromCurrentSynchronizationContext());
+                          return string.Empty;
+                      }, TaskScheduler.FromCurrentSynchronizationContext())
+                     .ContinueWith(async t1 =>
+                      {
+                          string pdf = await t1.Result;
+                          if (!string.IsNullOrWhiteSpace(pdf))
+                          {
+                              Model?.LoadUrl(pdf);
+                          }
+                      }, default, TaskContinuationOptions.OnlyOnRanToCompletion,
+                      TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void TakeScreenshot(object sender, RoutedEventArgs e)
