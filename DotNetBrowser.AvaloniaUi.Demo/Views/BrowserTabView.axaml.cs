@@ -75,7 +75,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
             Model.Browser.Keyboard.KeyPressed.Handler =
                 new Handler<IKeyPressedEventArgs, InputEventResponse>(p =>
                 {
-                    if (p.VirtualKey == KeyCode.F11 || p.VirtualKey == KeyCode.Escape)
+                    if (p.VirtualKey is KeyCode.F11 or KeyCode.Escape)
                     {
                         Dispatcher.UIThread.InvokeAsync(() => fullScreenWindow.Close());
                     }

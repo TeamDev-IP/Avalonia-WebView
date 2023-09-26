@@ -163,7 +163,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
 
         public void TakeScreenshot(string fileName)
         {
-            SKImage img = Browser?.TakeImage().ToSKImage();
+            SKImage img = Browser?.TakeImage().ToSkImage();
             using FileStream stream = File.OpenWrite(Path.GetFullPath(fileName));
             SKData d = img?.Encode(SKEncodedImageFormat.Png, 100);
             d?.SaveTo(stream);

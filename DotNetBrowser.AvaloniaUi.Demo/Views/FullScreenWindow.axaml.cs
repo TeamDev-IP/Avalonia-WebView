@@ -35,7 +35,7 @@ public partial class FullScreenWindow : Window
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);
-        if (e.Key == Key.F11)
+        if (e.Key is Key.F11 or Key.Escape)
         {
             Close();
         }
