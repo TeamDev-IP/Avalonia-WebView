@@ -60,10 +60,12 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
 
         private void FullScreen(object sender, RoutedEventArgs e)
         {
-            Window visualRoot = this.GetVisualRoot() as Window;
-            FullScreenWindow fullScreenWindow = new();
-
-            fullScreenWindow.Closed += (s, e) =>
+            FullScreenWindow fullScreenWindow = new FullScreenWindow();
+            fullScreenWindow.Opened += (_, __) =>
+            {
+                Model.Browser.Focus();
+            };
+            fullScreenWindow.Closed += (s, e1) =>
             {
                 Model.Browser.Keyboard.KeyPressed.Handler = null;
                 View.InitializeFrom(Model.Browser);
@@ -73,7 +75,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
             Model.Browser.Keyboard.KeyPressed.Handler =
                 new Handler<IKeyPressedEventArgs, InputEventResponse>(p =>
                 {
-                    if (p.VirtualKey == KeyCode.F11)
+                    if (p.VirtualKey == KeyCode.F11 || p.VirtualKey == KeyCode.Escape)
                     {
                         Dispatcher.UIThread.InvokeAsync(() => fullScreenWindow.Close());
                     }
@@ -83,7 +85,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
             View.IsVisible = false;
             fullScreenWindow.View.InitializeFrom(Model.Browser);
 
-            fullScreenWindow.Show(visualRoot);
+            fullScreenWindow.Show();
         }
 
         private void OnDataContextChanged(object sender, EventArgs e)
