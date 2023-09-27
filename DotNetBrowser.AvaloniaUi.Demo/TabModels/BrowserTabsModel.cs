@@ -48,6 +48,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
         public event EventHandler<BrowserTabModel> TabCreated;
         public event EventHandler<MessageEventArgs> EngineCrashed;
         public event EventHandler<MessageEventArgs> EngineInitFailed;
+        public event EventHandler NoLicenseFound;
 
         public void CreateEngine(Visual parent)
         {
@@ -105,6 +106,10 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
                     }
                 };
             }
+            catch (NoLicenseException ex)
+            {
+                NoLicenseFound?.Invoke(this, EventArgs.Empty);
+            }
             catch (Exception e)
             {
                 Trace.WriteLine(e);
@@ -116,6 +121,10 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
 
         public void CreateTab(string url = DefaultUrl)
         {
+            if (engine == null)
+            {
+                return;
+            }
             BrowserTabModel browserTabModel = new("New Tab", url, CloseTab)
             {
                 Browser = engine?.CreateBrowser(),

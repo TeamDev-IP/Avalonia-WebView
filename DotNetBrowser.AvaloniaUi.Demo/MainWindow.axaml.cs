@@ -1,4 +1,5 @@
 #region Copyright
+
 // Copyright © 2023, TeamDev. All rights reserved.
 // 
 // Redistribution and use in source and/or binary forms, with or without
@@ -16,15 +17,16 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 #endregion
 
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Input;
+using Avalonia.Threading;
 using DotNetBrowser.AvaloniaUi.Demo.TabModels;
+using DotNetBrowser.AvaloniaUi.Demo.Views;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Base;
 using MsBox.Avalonia.Dto;
@@ -43,6 +45,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo
             Model.AllTabsClosed += (_, _) => Close();
             Model.EngineCrashed += (_, e) => ShowError(e.Message, e.Title);
             Model.EngineInitFailed += (_, e) => ShowError(e.Message, e.Title);
+            Model.NoLicenseFound += ShowNoLicenseMessage;
             Model.TabCreated += (_, model) => MainTabControl.SelectedItem = model;
             DataContext = Model;
             Closed += MainWindow_Closed;
@@ -53,19 +56,6 @@ namespace DotNetBrowser.AvaloniaUi.Demo
             Model.DisposeEngine();
         }
 
-        // ReSharper disable UnusedParameter.Local
-        private void MainWindow_Opened(object sender, EventArgs e)
-        {
-            if (Design.IsDesignMode)
-            {
-                return;
-            }
-
-            Model.CreateEngine(this);
-            Model.CreateTab();
-        }
-        // ReSharper restore UnusedParameter.Local
-
         private void ShowError(string message, string title)
         {
             MessageBoxCustomParams parameters = new()
@@ -74,12 +64,52 @@ namespace DotNetBrowser.AvaloniaUi.Demo
                 ContentTitle = title,
                 ContentMessage = message,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                ButtonDefinitions = new[] { new ButtonDefinition { Name = "OK", IsDefault = true } },
+                ButtonDefinitions = new[]
+                    { new ButtonDefinition { Name = "OK", IsDefault = true } },
             };
             IMsBox<string> messageBoxStandardWindow = MessageBoxManager
                .GetMessageBoxCustom(parameters);
 
             messageBoxStandardWindow.ShowWindowDialogAsync(this);
         }
+
+        private void ShowNoLicenseMessage(object sender, EventArgs args)
+        {
+            NoLicenseDialog dialog = new();
+            dialog.ShowDialog<bool>(this)
+                  .ContinueWith(t =>
+                   {
+                       string license = dialog.InputBox.Text;
+                       bool dialogConfirmed = t.Result;
+                       if (dialogConfirmed && !string.IsNullOrWhiteSpace(license))
+                       {
+                           File.WriteAllText(Path.GetFullPath("dotnetbrowser.license"),
+                                             license);
+                           Dispatcher.UIThread.InvokeAsync(Initialize);
+                       }
+                       else
+                       {
+                           Close();
+                       }
+                   }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        // ReSharper disable UnusedParameter.Local
+        private void MainWindow_Opened(object sender, EventArgs e)
+        {
+            if (Design.IsDesignMode)
+            {
+                return;
+            }
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            Model.CreateEngine(this);
+            Model.CreateTab();
+        }
+        // ReSharper restore UnusedParameter.Local
     }
 }

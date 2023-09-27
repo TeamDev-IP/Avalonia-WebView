@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DotNetBrowser.AvaloniaUi.Demo.Views.NoLicenseDialog"
+        MaxHeight="250"
+        MinHeight="100"
+        MinWidth="350"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        Title="Configure DotNetBrowser license">
+    <Grid AttachedToVisualTree="MainLayout_OnAttachedToVisualTree" MinWidth="350">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="15" HorizontalAlignment="Center">
+            <TextBlock>
+                Thank you for trying DotNetBrowser in AvaloniaUI.
+            </TextBlock>
+            <TextBlock Margin="0 15 0 0">
+                To run the demo, get the free trial license and insert it here:
+            </TextBlock>
+        </StackPanel>
+        <TextBox x:Name="InputBox" Grid.Row="1" Margin="15 0 15 10" />
+
+        <StackPanel Grid.Row="2" Margin="15,10,15,10" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="OkButton" MinWidth="100" MinHeight="25" Click="OkButton_Click" IsDefault="True"
+                    Content="Apply and start the demo" HorizontalContentAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</Window>
