@@ -114,6 +114,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
 
             provider?.SaveFilePickerAsync(new FilePickerSaveOptions
                       {
+                          Title = "Select where to save the PDF file",
                           DefaultExtension = "pdf",
                           FileTypeChoices = new[] { FilePickerFileTypes.Pdf },
                       })
@@ -144,6 +145,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
 
             provider?.SaveFilePickerAsync(new FilePickerSaveOptions
                       {
+                          Title = "Select where to save the screenshot",
                           DefaultExtension = "png",
                           FileTypeChoices = new[] { FilePickerFileTypes.ImagePng },
                       })
