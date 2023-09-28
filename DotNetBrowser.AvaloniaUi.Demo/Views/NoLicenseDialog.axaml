@@ -30,7 +30,7 @@
                 To run the demo, get the free trial license and insert it below:
             </TextBlock>
         </StackPanel>
-        <TextBox x:Name="InputBox" Grid.Row="1" Margin="15 0 15 10" Watermark="License key"/>
+        <TextBox x:Name="InputBox" Grid.Row="1" Margin="15 0 15 10" Watermark="License key" Width="450"/>
 
         <StackPanel Grid.Row="2" Margin="15,10,15,10" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="ApplyButton" MinWidth="100" MinHeight="25" Command="{Binding ApplyLicense}" 
