@@ -21,12 +21,14 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using DotNetBrowser.AvaloniaUi.Demo.TabModels;
 using DotNetBrowser.AvaloniaUi.Demo.Views;
+using DotNetBrowser.Logging;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Base;
 using MsBox.Avalonia.Dto;
@@ -40,6 +42,9 @@ namespace DotNetBrowser.AvaloniaUi.Demo
 
         public MainWindow()
         {
+            LoggerProvider.Instance.Level = SourceLevels.Verbose;
+            LoggerProvider.Instance.FileLoggingEnabled = true;
+            LoggerProvider.Instance.OutputFile = "dotnetbrowser.log";
             InitializeComponent();
             Model = new BrowserTabsModel();
             Model.AllTabsClosed += (_, _) => Close();
@@ -76,12 +81,11 @@ namespace DotNetBrowser.AvaloniaUi.Demo
         private void ShowNoLicenseMessage(object sender, EventArgs args)
         {
             NoLicenseDialog dialog = new();
-            dialog.ShowDialog<bool>(this)
+            dialog.ShowDialog<string>(this)
                   .ContinueWith(t =>
                    {
-                       string license = dialog.InputBox.Text;
-                       bool dialogConfirmed = t.Result;
-                       if (dialogConfirmed && !string.IsNullOrWhiteSpace(license))
+                       string license = t.Result;
+                       if (!string.IsNullOrWhiteSpace(license))
                        {
                            File.WriteAllText(Path.GetFullPath("dotnetbrowser.license"),
                                              license);

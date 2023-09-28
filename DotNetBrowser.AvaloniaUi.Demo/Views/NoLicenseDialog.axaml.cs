@@ -33,24 +33,27 @@ public partial class NoLicenseDialog : Window
     {
         InitializeComponent();
         AddHandler(KeyDownEvent, OnKeyPressed, RoutingStrategies.Tunnel);
+        DataContext = this;
     }
+
+    public void ApplyLicense(object msg)
+    {
+        Close(msg?.ToString() ?? string.Empty);
+    }
+
+    public bool CanApplyLicense(object msg) => !string.IsNullOrWhiteSpace(msg?.ToString());
 
     private void MainLayout_OnAttachedToVisualTree(object sender,
                                                    VisualTreeAttachmentEventArgs e)
     {
-        OkButton.Focus();
-    }
-
-    private void OkButton_Click(object sender, RoutedEventArgs e)
-    {
-        Close(true);
+        ApplyButton.Focus();
     }
 
     private void OnKeyPressed(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Escape)
         {
-            Close(false);
+            Close(string.Empty);
         }
     }
 }
