@@ -102,5 +102,9 @@ UpgradeLog*.htm
 #License files
 *.license
 
-#Ignore Visual Studio cache
+#Ignore Visual Studio and Rider cache
+.idea
 *.vs
+
+#Ignore DotNetBrowser logs
+dotnetbrowser.log
