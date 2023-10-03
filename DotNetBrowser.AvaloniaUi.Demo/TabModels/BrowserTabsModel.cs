@@ -106,7 +106,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
                     }
                 };
             }
-            catch (NoLicenseException ex)
+            catch (NoLicenseException)
             {
                 NoLicenseFound?.Invoke(this, EventArgs.Empty);
             }
