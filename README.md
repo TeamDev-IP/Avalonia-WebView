@@ -4,11 +4,9 @@
   <br>
 </h1>
 
-<h4 align="center">A demo browser application built with <a href="https://avaloniaui.net/" target="_blank">Avalonia UI</a> and <a href="https://teamdev.com/dotnetbrowser" target="_blank">DotNetBrowser</a>.</h4>
+<p align="center"><strong>A demo browser application built with <a href="https://avaloniaui.net/" target="_blank">Avalonia UI</a> and <a href="https://teamdev.com/dotnetbrowser" target="_blank">DotNetBrowser</a>.</strong></p>
 
-<h4 align="center">Works on Windows, macOS, and Linux.</h4>
-
-<h4 align="center"></h4>
+<p align="center"><strong>Works on Windows, macOS, and Linux.</strong></p>
 
 <p align="center">
   <img src="screenshot.png" alt="Size Limit CLI" width="735">
@@ -22,7 +20,7 @@
 
 Get a 30-day free trial license for DotNetBrowser by [this link](https://teamdev.com/dotnetbrowser/?utm_source=github&utm_medium=avalonia-demo&utm_campaign=avalonia#evaluate). The license will arrive in your inbox in an instant.
 
-And then execute this command from the solution directory:
+Then execute this command from the solution directory:
 
    ```bash
    dotnet run --project DotNetBrowser.AvaloniaUi.Demo
