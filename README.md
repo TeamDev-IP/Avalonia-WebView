@@ -1,6 +1,5 @@
 <h1 align="center">
-  <br>
-  Avalonia Browser
+  <br>  Avalonia Browser
 </h1>
 
 <p align="center"><strong>A demo browser application built with <a href="https://avaloniaui.net/" target="_blank">Avalonia UI</a> and <a href="https://teamdev.com/dotnetbrowser" target="_blank">DotNetBrowser</a>.</strong></p>
@@ -31,4 +30,4 @@ You can also:
 
 ## Credits
 
-* Thanks to [Avalonia UI team](https://github.com/AvaloniaUI/Avalonia) for great technology and collaboration.
+* Thanks to [Avalonia UI team](https://github.com/AvaloniaUI/Avalonia) for the great technology and collaboration.
