@@ -2,9 +2,11 @@
 
 A minimal browser application built with Avalonia UI and DotNetBrowser. 
 
-![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+Launch it on Windows, macOS, and Linux.
+
+<p align="center">
+  <img src="screenshot.png" alt="Size Limit CLI" width="910">
+</p>
 
 ## Prerequisites
 
