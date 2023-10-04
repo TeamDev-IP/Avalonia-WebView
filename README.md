@@ -1,11 +1,15 @@
-# Avalonia Browser
+<h1 align="center">
+  <br>
+  Avalonia Browser
+  <br>
+</h1>
 
-A minimal browser application built with Avalonia UI and DotNetBrowser. 
+<h4 align="center">A demo browser application build with <a href="https://avaloniaui.net/" target="_blank">Avalonia UI</a> and <a href="https://teamdev.com/dotnetbrowser" target="_blank">DotNetBrowser</a>.</h4>
 
-Launch it on Windows, macOS, and Linux.
+<h4 align="center">Works on Windows, macOS, and Linux.</h4>
 
 <p align="center">
-  <img src="screenshot.png" alt="Size Limit CLI" width="910">
+  <img src="screenshot.png" alt="Size Limit CLI" width="735">
 </p>
 
 ## Prerequisites
@@ -14,8 +18,14 @@ Launch it on Windows, macOS, and Linux.
 
 ## How to run
 
-Execute the following command from the solution directory:
+Get a 30-day free trial license for DotNetBrowser by [this link](https://teamdev.com/dotnetbrowser/?utm_source=github&utm_medium=avalonia-demo&utm_campaign=avalonia#evaluate). The license will arrive in your inbox in an instant.
 
-```
-dotnet run --project DotNetBrowser.AvaloniaUi.Demo
-```
+And then execute this command from the solution directory:
+
+   ```bash
+   dotnet run --project DotNetBrowser.AvaloniaUi.Demo
+   ```
+
+## Credits
+
+* Thanks to [Avalonia UI team](https://github.com/AvaloniaUI/Avalonia) for great technology and collaboration.
