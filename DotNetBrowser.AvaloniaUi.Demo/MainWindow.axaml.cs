@@ -87,7 +87,10 @@ namespace DotNetBrowser.AvaloniaUi.Demo
                        string license = t.Result;
                        if (!string.IsNullOrWhiteSpace(license))
                        {
-                           File.WriteAllText(Path.GetFullPath("dotnetbrowser.license"),
+                           string directory =
+                               Path.GetDirectoryName(typeof(MainWindow).Assembly.Location);
+                           string path = Path.Combine(directory, "dotnetbrowser.license");
+                           File.WriteAllText(Path.GetFullPath(path),
                                              license);
                            Dispatcher.UIThread.InvokeAsync(Initialize);
                        }
