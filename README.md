@@ -30,7 +30,7 @@ And then execute this command from the solution directory:
 
 You can also:
 
-<a href='https://codespaces.new/AvaloniaUI/Avalonia'><img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'></a>
+<a href='https://codespaces.new/TeamDev-IP/Avalonia-Browser'><img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'></a>
 
 ## Credits
 
