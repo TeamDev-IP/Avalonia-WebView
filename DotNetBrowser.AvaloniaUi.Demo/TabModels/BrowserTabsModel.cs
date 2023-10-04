@@ -37,7 +37,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
     public class BrowserTabsModel
     {
         private const string DefaultUrl =
-            "https://teamdev.com/dotnetbrowser/blog/dotnetbrowser-supports-avalonia/?utm_source=github&utm_medium=avalonia-demo-app&utm_campaign=avalonia";
+            "https://links.teamdev.com/avalonia-case-study-app";
 
         private IEngine engine;
         private RenderingMode renderingMode;
