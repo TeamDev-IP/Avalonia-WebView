@@ -8,6 +8,8 @@
 
 <h4 align="center">Works on Windows, macOS, and Linux.</h4>
 
+<h4 align="center"></h4>
+
 <p align="center">
   <img src="screenshot.png" alt="Size Limit CLI" width="735">
 </p>
@@ -25,6 +27,10 @@ And then execute this command from the solution directory:
    ```bash
    dotnet run --project DotNetBrowser.AvaloniaUi.Demo
    ```
+
+You can also:
+
+<a href='https://codespaces.new/AvaloniaUI/Avalonia'><img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'></a>
 
 ## Credits
 
