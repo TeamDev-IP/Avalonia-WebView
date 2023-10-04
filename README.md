@@ -1,7 +1,6 @@
 <h1 align="center">
   <br>
   Avalonia Browser
-  <br>
 </h1>
 
 <p align="center"><strong>A demo browser application built with <a href="https://avaloniaui.net/" target="_blank">Avalonia UI</a> and <a href="https://teamdev.com/dotnetbrowser" target="_blank">DotNetBrowser</a>.</strong></p>
