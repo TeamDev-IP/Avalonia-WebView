@@ -4,7 +4,7 @@
   <br>
 </h1>
 
-<h4 align="center">A demo browser application build with <a href="https://avaloniaui.net/" target="_blank">Avalonia UI</a> and <a href="https://teamdev.com/dotnetbrowser" target="_blank">DotNetBrowser</a>.</h4>
+<h4 align="center">A demo browser application built with <a href="https://avaloniaui.net/" target="_blank">Avalonia UI</a> and <a href="https://teamdev.com/dotnetbrowser" target="_blank">DotNetBrowser</a>.</h4>
 
 <h4 align="center">Works on Windows, macOS, and Linux.</h4>
 
