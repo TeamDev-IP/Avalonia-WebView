@@ -39,6 +39,8 @@ You can also:
 
 <a href='https://codespaces.new/TeamDev-IP/Avalonia-Browser'><img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'></a>
 
+<a href='https://app.codeanywhere.com/#https://github.com/https://github.com/TeamDev-IP/Avalonia-Browser'><img src='https://codeanywhere.com/img/open-in-codeanywhere-btn.svg' alt='Open in Codeanywhere' style='max-width: 100%;'></a>
+
 ## Credits
 
 * Thanks to [Avalonia UI team](https://github.com/AvaloniaUI/Avalonia) for the great technology and collaboration.
