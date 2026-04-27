@@ -74,8 +74,7 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
                 != null)
             {
                 proprietaryFeatures = ProprietaryFeatures.Aac
-                                      | ProprietaryFeatures.H264
-                                      | ProprietaryFeatures.Widevine;
+                                      | ProprietaryFeatures.H264;
             }
 
             try
