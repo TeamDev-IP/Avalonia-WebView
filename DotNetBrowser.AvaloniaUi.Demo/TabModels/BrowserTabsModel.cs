@@ -30,14 +30,14 @@ using DotNetBrowser.AvaloniaUi.Dialogs;
 using DotNetBrowser.Engine;
 using DotNetBrowser.Handlers;
 using DotNetBrowser.Logging;
+using DotNetBrowser.Net;
 using DotNetBrowser.Permissions.Handlers;
 
 namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
 {
     public class BrowserTabsModel
     {
-        private const string DefaultUrl =
-            "https://links.teamdev.com/avalonia-case-study-app";
+        private const string DefaultUrl = "https://links.teamdev.com/avalonia-case-study-app";
 
         private IEngine engine;
         private RenderingMode renderingMode;
@@ -83,6 +83,10 @@ namespace DotNetBrowser.AvaloniaUi.Demo.TabModels
                 {
                     RenderingMode = renderingMode,
                     ProprietaryFeatures = proprietaryFeatures,
+                    Schemes =
+                    {
+                        {Scheme.Http, new AvaloniaInterceptRequestHandler()}
+                    },
                     ChromiumSwitches = { "--force-renderer-accessibility" }
                 }.Build());
 

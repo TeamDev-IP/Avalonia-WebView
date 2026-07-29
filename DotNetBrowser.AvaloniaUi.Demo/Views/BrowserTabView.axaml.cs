@@ -88,6 +88,26 @@ namespace DotNetBrowser.AvaloniaUi.Demo.Views
             fullScreenWindow.Show();
         }
 
+        private void LoadCssCursors(object sender, RoutedEventArgs e)
+        {
+            Model?.LoadUrl("http://internal.host/css-cursors.html");
+        }
+
+        private void LoadHtml5Video(object sender, RoutedEventArgs e)
+        {
+            Model?.LoadUrl("http://internal.host/html5-video.html");
+        }
+
+        private void LoadJavaScriptDialogs(object sender, RoutedEventArgs e)
+        {
+            Model?.LoadUrl("http://internal.host/javascript-dialogs.html");
+        }
+
+        private void LoadPdfViewer(object sender, RoutedEventArgs e)
+        {
+            Model?.LoadUrl("http://internal.host/pdf-viewer.pdf");
+        }
+
         private void OnDataContextChanged(object sender, EventArgs e)
         {
             if (Model != null)

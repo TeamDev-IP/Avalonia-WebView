@@ -18,6 +18,11 @@
             <MenuItem Header="Print to PDF" Click="PrintToPdf" />
             <MenuItem Header="Take Screenshot" Click="TakeScreenshot" />
             <MenuItem Header="Developer Tools" Command="{Binding OpenDevTools}" />
+            <Separator />
+            <MenuItem Header="JavaScript Dialogs" Click="LoadJavaScriptDialogs" />
+            <MenuItem Header="PDF Viewer" Click="LoadPdfViewer" />
+            <MenuItem Header="HTML5 Video" Click="LoadHtml5Video" />
+            <MenuItem Header="CSS Cursors" Click="LoadCssCursors" />
         </ContextMenu>
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
