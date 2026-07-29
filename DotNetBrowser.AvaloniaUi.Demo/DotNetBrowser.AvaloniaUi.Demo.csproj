@@ -33,6 +33,9 @@
     <AvaloniaResource Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="resources\**\*.*" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Views\BrowserTabView.axaml.cs">
       <DependentUpon>BrowserTabView.axaml</DependentUpon>
     </Compile>
